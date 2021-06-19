@@ -14,7 +14,7 @@ abstract interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(article: Article): Long?
 
-    @Query("SELECT * FROM article_table")
+    @Query("SELECT * FROM article_table ")
      fun getArticle():LiveData<List<Article>>
 
 

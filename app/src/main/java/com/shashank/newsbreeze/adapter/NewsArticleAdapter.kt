@@ -3,16 +3,18 @@ package com.shashank.newsbreeze.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shashank.newsbreeze.R
 import com.shashank.newsbreeze.data.entites.Article
+import com.shashank.newsbreeze.ui.viewmodel.NewsViewModel
 import kotlinx.android.synthetic.main.single_article.view.*
 
 class NewsArticleAdapter:RecyclerView.Adapter<NewsArticleAdapter.NewsViewHolder>() {
-
 
 
     private val differCallBack = object : DiffUtil.ItemCallback<Article>(){
@@ -48,11 +50,22 @@ class NewsArticleAdapter:RecyclerView.Adapter<NewsArticleAdapter.NewsViewHolder>
             txtdescription.text= article.description
             txtpublishdate.text= article.publishedAt
 
-            setOnClickListener {
+                setOnClickListener {
+                    onItemClickListener?.let {it(article)
+
+                    }
+                }
+
+           readBtn.setOnClickListener {
                 onItemClickListener?.let {it(article)
 
                 }
             }
+
+          
+
+
+
 
         }
 
@@ -64,6 +77,7 @@ class NewsArticleAdapter:RecyclerView.Adapter<NewsArticleAdapter.NewsViewHolder>
     }
 
     private var onItemClickListener: ((Article) -> Unit)? =null
+
 
     fun setOnItemClickListener(listener : (Article) -> Unit){
         onItemClickListener = listener

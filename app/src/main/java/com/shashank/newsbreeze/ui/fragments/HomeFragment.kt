@@ -16,6 +16,7 @@ import com.shashank.newsbreeze.Util.Resource
 import com.shashank.newsbreeze.adapter.NewsArticleAdapter
 import com.shashank.newsbreeze.ui.viewmodel.NewsViewModel
 import kotlinx.android.synthetic.main.home_articles.*
+import kotlinx.android.synthetic.main.single_article.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -30,6 +31,19 @@ class HomeFragment :Fragment(R.layout.home_articles) {
         super.onViewCreated(view, savedInstanceState)
         viewModel =(activity as MainActivity).viewModel
         setupRV()
+
+        newsAdapter.setOnItemClickListener {
+
+            val bundle =Bundle().apply {
+                putSerializable("article",it)
+
+            }
+            findNavController().navigate(R.id.action_homeFragment_to_articleFragment,bundle)
+
+        }
+
+
+
         gotoSaveSection.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_savedFragment)
         }
@@ -106,6 +120,8 @@ class HomeFragment :Fragment(R.layout.home_articles) {
             adapter=newsAdapter
             layoutManager= LinearLayoutManager(activity)
         }
+
+
     }
 
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shashank.newsbreeze.Util.Resource
+import com.shashank.newsbreeze.data.entites.Article
 import com.shashank.newsbreeze.data.entites.NewsResponse
 import com.shashank.newsbreeze.data.repository.NewsRepository
 import kotlinx.coroutines.launch
@@ -56,4 +57,11 @@ class NewsViewModel(val newsRepository: NewsRepository):ViewModel() {
         }
         return  Resource.Error(response.message())
     }
+
+    fun saveArticle(article: Article)= viewModelScope.launch {
+        newsRepository.upset(article)
+    }
+
+    fun getsavedNews()= newsRepository.getSaved()
+
 }
