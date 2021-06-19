@@ -3,8 +3,6 @@ package com.shashank.newsbreeze.ui.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.core.view.get
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,7 +14,6 @@ import com.shashank.newsbreeze.Util.Resource
 import com.shashank.newsbreeze.adapter.NewsArticleAdapter
 import com.shashank.newsbreeze.ui.viewmodel.NewsViewModel
 import kotlinx.android.synthetic.main.home_articles.*
-import kotlinx.android.synthetic.main.single_article.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -45,7 +42,17 @@ class HomeFragment :Fragment(R.layout.home_articles) {
 
 
         gotoSaveSection.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_savedFragment)
+
+
+
+            val bundle1 =Bundle().apply {
+                putString("checkSafe","TRUE")
+            }
+            //Log.d("TOAST",bundle1.getString("checkSafe")!!)
+         //Toast.makeText(context, "${bundle1.getString("checkSafe")}", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_homeFragment_to_savedFragment,bundle1)
+
+
         }
 
 
@@ -115,7 +122,7 @@ class HomeFragment :Fragment(R.layout.home_articles) {
 
 
     private fun setupRV(){
-        newsAdapter= NewsArticleAdapter()
+        newsAdapter= NewsArticleAdapter(requireActivity(), "FALSE")
         rvBreakingNews.apply {
             adapter=newsAdapter
             layoutManager= LinearLayoutManager(activity)

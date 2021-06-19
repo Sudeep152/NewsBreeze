@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.shashank.newsbreeze.MainActivity
@@ -34,6 +35,9 @@ class ArticleFragment : Fragment(R.layout.frament_article) {
         window.decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
 
 
+        backBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         val article =args.article
 
@@ -48,8 +52,10 @@ class ArticleFragment : Fragment(R.layout.frament_article) {
         }
 
         author.apply {
-
-            this.text= article.author
+           this.text=if(article.author==""){ "Unknown"
+            }else{
+               article.author
+            }
         }
         Glide.with(this).load(article.urlToImage).into(imgAr)
 

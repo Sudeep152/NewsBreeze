@@ -9,6 +9,8 @@
         android:id="@+id/homeFragment"
         android:name="com.shashank.newsbreeze.ui.fragments.HomeFragment"
         android:label="HomeFragment" >
+
+
         <action
             android:id="@+id/action_homeFragment_to_savedFragment"
             app:enterAnim="@anim/slide_in_right"
@@ -28,6 +30,10 @@
         android:id="@+id/savedFragment"
         android:name="com.shashank.newsbreeze.ui.fragments.SavedFragment"
         android:label="SavedFragment" >
+        <argument
+            android:name="checkSafe"
+            android:defaultValue="" />
+
         <action
             android:id="@+id/action_savedFragment_to_articleFragment"
             app:destination="@id/articleFragment" />

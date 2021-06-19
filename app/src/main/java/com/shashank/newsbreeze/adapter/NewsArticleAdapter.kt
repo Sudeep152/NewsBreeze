@@ -4,17 +4,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.findNavController
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.shashank.newsbreeze.MainActivity
 import com.shashank.newsbreeze.R
 import com.shashank.newsbreeze.data.entites.Article
 import com.shashank.newsbreeze.ui.viewmodel.NewsViewModel
 import kotlinx.android.synthetic.main.single_article.view.*
 
-class NewsArticleAdapter:RecyclerView.Adapter<NewsArticleAdapter.NewsViewHolder>() {
+class NewsArticleAdapter(var require: FragmentActivity,var  check: String) :RecyclerView.Adapter<NewsArticleAdapter.NewsViewHolder>() {
+
 
 
     private val differCallBack = object : DiffUtil.ItemCallback<Article>(){
@@ -56,6 +58,9 @@ class NewsArticleAdapter:RecyclerView.Adapter<NewsArticleAdapter.NewsViewHolder>
                     }
                 }
 
+            if(check == "TRUE"){
+                saveBtn.visibility=View.GONE
+            }
            readBtn.setOnClickListener {
                 onItemClickListener?.let {it(article)
 
@@ -63,7 +68,14 @@ class NewsArticleAdapter:RecyclerView.Adapter<NewsArticleAdapter.NewsViewHolder>
             }
 
           
+             saveBtn.setOnClickListener {
+                var viewModel: NewsViewModel = (require as MainActivity).viewModel
 
+                 viewModel.saveArticle(article)
+                 Toast.makeText(context, "your news saved", Toast.LENGTH_SHORT).show()
+
+
+             }
 
 
 
@@ -82,5 +94,7 @@ class NewsArticleAdapter:RecyclerView.Adapter<NewsArticleAdapter.NewsViewHolder>
     fun setOnItemClickListener(listener : (Article) -> Unit){
         onItemClickListener = listener
     }
+
+
 
 }
